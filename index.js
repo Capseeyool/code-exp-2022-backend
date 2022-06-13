@@ -3,11 +3,12 @@ const { Client } = require('pg')
 require('dotenv').config()
 
 const app = express()
+app.use(express.json())
+
 const client = new Client(process.env.DATABASE_URL)
+client.connect()
 
 const port = process.env.PORT || 3000
-
-client.connect()
 
 app.get('/', (req, res) => {
     res.send('Hello world!')
@@ -29,12 +30,46 @@ app.get('/admin', async (req, res) => {
     }
 })
 
-app.post('/register', async (req, res) => {
-    try {
-        await client.query('INSERT INTO users (username, password, pfp, platoon) VALUES ($1, $2, $3, $4)', ['username', 'password', 'pfp', 'platoon'].map(x => req.body[x]))
-        res.sendStatus(201)
-    } catch {
-        res.sendStatus(500)
+app.get('/user', async (req, res) => {
+    if (req.body.username && req.body.password) {
+        const password = await client.query('SELECT password FROM users WHERE username = $1', [req.body.username])
+        if (req.body.password == password.rows[0].password) {
+            // send users
+            res.sendStatus(200)
+        } else {
+            res.sendStatus(401)
+        }
+    } else {
+        res.sendStatus(400)
+    }
+})
+
+app.post('/user', async (req, res) => {
+    await client.query('INSERT INTO users (username, password, pfp, platoon) VALUES ($1, $2, NULL, NULL)', ['username', 'password'].map(x => req.body[x]))
+    res.sendStatus(201)
+})
+
+app.get('/events', async (req, res) => {
+    if (req.body.username && req.body.password) {
+        const password = await client.query('SELECT password FROM users WHERE username = $1', [req.body.username])
+        if (req.body.password == password.rows[0].password) {
+            const events = await client.query('SELECT * FROM events WHERE user_username = $1', [req.body.username])
+            res.send(events.rows)
+        } else {
+            res.sendStatus(401)
+        }
+    } else {
+        res.sendStatus(400)
+    }
+})
+
+app.post('/events', async (req, res) => {
+    if (req.body.username && req.body.password) {
+        const password = await client.query('SELECT password FROM users WHERE username = $1', [req.body.username])
+        if (req.body.password == password.rows[0].password) {
+            await client.query('INSERT INTO events VALUES($1, $2, $3, $4, $5, $6, $7)', ['user_username', 'title', 'description', 'backgroundColor', 'borderColor', 'startDate', 'endDate'].map(x => req.body.body[x]))
+            res.sendStatus(201)
+        }
     }
 })
 
