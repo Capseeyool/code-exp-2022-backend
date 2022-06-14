@@ -56,7 +56,7 @@ app.post('/login', async (req, res) => {
 })
 
 app.post('/register', async (req, res) => {
-    await client.query('INSERT INTO users (username, password, pfp, platoon) VALUES ($1, $2, NULL, NULL)', ['username', 'password'].map(x => req.body[x]))
+    await client.query('INSERT INTO users (username, password, pfp, platoon) VALUES ($1, $2, $3, $4)', ['username', 'password', 'pfp', 'platoon'].map(x => req.body[x]))
     res.sendStatus(201)
 })
 

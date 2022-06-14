@@ -34,7 +34,7 @@ Query Parameters
             "bordercolor": "000000",
             "startdate": "2022-01-01T00:00:00.000Z",
             "enddate": "2022-01-01T12:00:00.000Z",
-        }
+        }, ...
     ]
 }
 ```
@@ -78,6 +78,8 @@ Body
 {
     "username": username,
     "password": password,
+    "pfp": path-to-pfp,
+    "platoon": platoon,
 }
 ```
 
@@ -115,8 +117,8 @@ Body
         "backgroundcolor": "FFFFFF",
         "bordercolor": "000000",
         "startdate": "2022-01-01T00:00:00.000Z",
-        "enddate": "2022-01-01T12:00:00.000Z",
-    }
+        "enddate": "2022-01-01T12:00:00.000Z"
+    }, ...
 ]
 ```
 
@@ -141,7 +143,7 @@ Body
         "bordercolor": "000000",
         "startdate": "2022-01-01T00:00:00.000Z",
         "enddate": "2022-01-01T12:00:00.000Z",
-    }
+    },
 }
 ```
 
