@@ -30,20 +30,6 @@ app.get('/admin', async (req, res) => {
     }
 })
 
-app.get('/user', async (req, res) => {
-    if (req.body.username && req.body.password) {
-        const password = await client.query('SELECT password FROM users WHERE username = $1', [req.body.username])
-        if (req.body.password === password.rows[0].password) {
-            // send users
-            res.sendStatus(200)
-        } else {
-            res.sendStatus(401)
-        }
-    } else {
-        res.sendStatus(400)
-    }
-})
-
 app.post('/login', async (req, res) => {
     if (req.body.username && req.body.password) {
         const password = await client.query('SELECT password FROM users WHERE username = $1', [req.body.username])
