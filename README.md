@@ -1,7 +1,9 @@
 # CODE-EXP-2022-backend
+
 Backend server for our CODE_EXP application
 
 ## Base URL
+
 ```
 https://code-exp-2022.herokuapp.com
 ```
@@ -40,6 +42,7 @@ Query Parameters
 ## Login
 
 ### URL
+
 ```
 POST /login
 ```
@@ -118,6 +121,7 @@ Body
 ```
 
 ### URL
+
 ```
 POST /events
 ```
