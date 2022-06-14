@@ -48,7 +48,8 @@ app.post('/login', async (req, res) => {
     if (req.body.username && req.body.password) {
         const password = await client.query('SELECT password FROM users WHERE username = $1', [req.body.username])
         if (req.body.password == password.rows[0].password) {
-            res.send(200)
+            const user = await client.query('SELECT * FROM users WHERE username = $1', [req.body.username])
+            res.send(user)
         } else {
             res.send(401)
         }
