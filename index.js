@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/admin', async (req, res) => {
-    if (req.query.pw == process.env.pw) {
+    if (req.query.pw === process.env.pw) {
         const tables = await client.query('SHOW TABLES')
         r = {
             'tables': tables['rows'].map(x => x['table_name']),
@@ -33,7 +33,7 @@ app.get('/admin', async (req, res) => {
 app.get('/user', async (req, res) => {
     if (req.body.username && req.body.password) {
         const password = await client.query('SELECT password FROM users WHERE username = $1', [req.body.username])
-        if (req.body.password == password.rows[0].password) {
+        if (req.body.password === password.rows[0].password) {
             // send users
             res.sendStatus(200)
         } else {
@@ -47,11 +47,15 @@ app.get('/user', async (req, res) => {
 app.post('/login', async (req, res) => {
     if (req.body.username && req.body.password) {
         const password = await client.query('SELECT password FROM users WHERE username = $1', [req.body.username])
-        if (req.body.password == password.rows[0].password) {
-            const user = await client.query('SELECT * FROM users WHERE username = $1', [req.body.username])
-            res.send(user.rows[0])
+        if (password.rows[0].password) {
+            if (req.body.password === password.rows[0].password) {
+                const user = await client.query('SELECT * FROM users WHERE username = $1', [req.body.username])
+                res.send(user.rows[0])
+            } else {
+                res.sendStatus(401)
+            }
         } else {
-            res.send(401)
+            res.sendStatus(400)
         }
     }
 })
@@ -68,7 +72,7 @@ app.post('/register', async (req, res) => {
 app.get('/events', async (req, res) => {
     if (req.body.username && req.body.password) {
         const password = await client.query('SELECT password FROM users WHERE username = $1', [req.body.username])
-        if (req.body.password == password.rows[0].password) {
+        if (req.body.password === password.rows[0].password) {
             const events = await client.query('SELECT * FROM events WHERE user_username = $1', [req.body.username])
             res.send(events.rows)
         } else {
@@ -82,7 +86,7 @@ app.get('/events', async (req, res) => {
 app.post('/events', async (req, res) => {
     if (req.body.username && req.body.password) {
         const password = await client.query('SELECT password FROM users WHERE username = $1', [req.body.username])
-        if (req.body.password == password.rows[0].password) {
+        if (req.body.password === password.rows[0].password) {
             await client.query('INSERT INTO events VALUES($1, $2, $3, $4, $5, $6, $7)', ['user_username', 'title', 'description', 'backgroundColor', 'borderColor', 'startDate', 'endDate'].map(x => req.body.body[x]))
             res.sendStatus(201)
         }
