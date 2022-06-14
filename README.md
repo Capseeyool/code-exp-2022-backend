@@ -102,13 +102,9 @@ GET /events
 
 ### Request
 
-Body
-```
-{
-    "username": username,
-    "password": password,
-}
-```
+Query parameters
+- `username` - username
+- `password` - password
 
 ### Response
 
