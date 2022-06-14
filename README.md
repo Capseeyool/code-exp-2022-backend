@@ -6,13 +6,6 @@ Backend server for our CODE_EXP application
 https://code-exp-2022.herokuapp.com
 ```
 
-## Index
-
-### URL
-```
-GET /
-```
-
 ## Admin
 
 ### URL
