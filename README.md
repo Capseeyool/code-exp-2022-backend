@@ -60,8 +60,12 @@ Body
 ### Response
 
 ```
-200 - Login success
-401 - Login failed
+{
+    "username": username,
+    "password": password,
+    "pfp": path_to_pfp,
+    "platoon": platoon,
+}
 ```
 
 ## Register
@@ -78,7 +82,7 @@ Body
 {
     "username": username,
     "password": password,
-    "pfp": path-to-pfp,
+    "pfp": path_to_pfp,
     "platoon": platoon,
 }
 ```
