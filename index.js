@@ -44,7 +44,18 @@ app.get('/user', async (req, res) => {
     }
 })
 
-app.post('/user', async (req, res) => {
+app.post('/login', async (req, res) => {
+    if (req.body.username && req.body.password) {
+        const password = await client.query('SELECT password FROM users WHERE username = $1', [req.body.username])
+        if (req.body.password == password.rows[0].password) {
+            res.send(200)
+        } else {
+            res.send(401)
+        }
+    }
+})
+
+app.post('/register', async (req, res) => {
     await client.query('INSERT INTO users (username, password, pfp, platoon) VALUES ($1, $2, NULL, NULL)', ['username', 'password'].map(x => req.body[x]))
     res.sendStatus(201)
 })
