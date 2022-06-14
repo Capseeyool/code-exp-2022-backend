@@ -74,7 +74,11 @@ app.post('/events', async (req, res) => {
         const password = await client.query('SELECT password FROM users WHERE username = $1', [req.body.username])
         if (req.body.password === password.rows[0].password) {
             try {
-                await client.query('INSERT INTO events VALUES($1, $2, $3, $4, $5, $6, $7)', ['user_username', 'title', 'description', 'backgroundColor', 'borderColor', 'startDate', 'endDate'].map(x => req.body.body[x]))
+                await client.query('INSERT INTO events VALUES($1, $2, $3, $4, $5, $6, $7)',
+                [
+                    req.body.username,
+                    ...['title', 'description', 'backgroundColor', 'borderColor', 'startDate', 'endDate'].map(x => req.body.body[x])
+                ])
                 res.sendStatus(201)
             } catch (e) {
                 res.send(e)
