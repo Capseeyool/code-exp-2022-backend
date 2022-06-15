@@ -1,27 +1,22 @@
 # CODE-EXP-2022-backend
-
 Backend server for our CODE_EXP application
 
 ## Base URL
-
 ```
 https://code-exp-2022.herokuapp.com
 ```
 
 ## Admin
-
 ### URL
 ```
 GET /admin
 ```
 
 ### Request
-
 Query Parameters
 - `pw` - Password to access admin site (Ask ._.#6830 on discord for it)
 
 ### Response
-
 ```
 {
     "tables": [table_name],
@@ -40,15 +35,12 @@ Query Parameters
 ```
 
 ## Login
-
 ### URL
-
 ```
 POST /login
 ```
 
 ### Request
-
 Body
 ```
 {
@@ -58,7 +50,6 @@ Body
 ```
 
 ### Response
-
 ```
 {
     "username": username,
@@ -69,14 +60,12 @@ Body
 ```
 
 ## Register
-
 ### URL
 ```
 POST /register
 ```
 
 ### Request
-
 Body
 ```
 {
@@ -88,26 +77,22 @@ Body
 ```
 
 ### Response
-
 ```
 201 - Registration successful
 ```
 
 ## Events
-
 ### URL
 ```
 GET /events
 ```
 
 ### Request
-
 Query parameters
 - `username` - username
 - `password` - password
 
 ### Response
-
 ```
 [
     {
@@ -123,13 +108,11 @@ Query parameters
 ```
 
 ### URL
-
 ```
 POST /events
 ```
 
 ### Request
-
 Body
 ```
 {
@@ -148,7 +131,6 @@ Body
 ```
 
 ### Response
-
 ```
 201 - Event created
 ```
