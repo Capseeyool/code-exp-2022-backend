@@ -55,7 +55,7 @@ app.post('/register', async (req, res) => {
     }
 })
 
-app.post('/events', async (req, res) => {
+app.get('/events', async (req, res) => {
     if (req.query.username && req.query.password) {
         const password = await client.query('SELECT password FROM users WHERE username = $1', [req.query.username])
         if (req.query.password === password.rows[0].password) {
