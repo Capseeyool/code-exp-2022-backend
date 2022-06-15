@@ -45,6 +45,8 @@ app.post('/login', async (req, res) => {
         } else {
             res.sendStatus(400)
         }
+    } else {
+        res.sendStatus(400)
     }
 })
 
