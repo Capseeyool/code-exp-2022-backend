@@ -55,11 +55,11 @@ app.post('/register', async (req, res) => {
     }
 })
 
-app.post('/getEvents', async (req, res) => {
-    if (req.body.username && req.body.password) {
-        const password = await client.query('SELECT password FROM users WHERE username = $1', [req.body.username])
-        if (req.body.password === password.rows[0].password) {
-            const events = await client.query('SELECT * FROM events WHERE user_username = $1', [req.body.username])
+app.post('/events', async (req, res) => {
+    if (req.query.username && req.query.password) {
+        const password = await client.query('SELECT password FROM users WHERE username = $1', [req.query.username])
+        if (req.query.password === password.rows[0].password) {
+            const events = await client.query('SELECT * FROM events WHERE user_username = $1', [req.query.username])
             res.send(events.rows)
         } else {
             res.sendStatus(401)
