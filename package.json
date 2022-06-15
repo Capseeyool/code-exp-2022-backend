@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Capseeyool/code-exp-2022-backend#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "pg": "^8.7.3"

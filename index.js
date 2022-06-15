@@ -1,8 +1,10 @@
+const cors = require('cors')
 const express = require('express')
 const { Client } = require('pg')
 require('dotenv').config()
 
 const app = express()
+app.use(cors())
 app.use(express.json())
 
 const client = new Client(process.env.DATABASE_URL)
