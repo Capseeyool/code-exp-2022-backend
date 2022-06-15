@@ -62,7 +62,7 @@ app.post('/register', async (req, res) => {
 app.get('/events', async (req, res) => {
     if (req.query.username && req.query.password) {
         const password = await client.query('SELECT password FROM users WHERE username = $1', [req.query.username])
-        if (password) {
+        if (password !== undefined) {
             if (req.query.password === password.rows[0].password) {
                 const events = await client.query('SELECT * FROM events WHERE user_username = $1', [req.query.username])
                 res.set('Access-Control-Allow-Origin', '*')
@@ -81,17 +81,21 @@ app.get('/events', async (req, res) => {
 app.post('/events', async (req, res) => {
     if (req.body.username && req.body.password) {
         const password = await client.query('SELECT password FROM users WHERE username = $1', [req.body.username])
-        if (req.body.password === password.rows[0].password) {
-            try {
-                await client.query('INSERT INTO events VALUES($1, $2, $3, $4, $5, $6, $7)',
-                [
-                    req.body.username,
-                    ...['title', 'description', 'backgroundColor', 'borderColor', 'startDate', 'endDate'].map(x => req.body.body[x])
-                ])
-                res.sendStatus(201)
-            } catch (e) {
-                res.send(e)
+        if (password) {
+            if (req.body.password === password.rows[0].password) {
+                try {
+                    await client.query('INSERT INTO events VALUES($1, $2, $3, $4, $5, $6, $7)',
+                    [
+                        req.body.username,
+                        ...['title', 'description', 'backgroundColor', 'borderColor', 'startDate', 'endDate'].map(x => req.body.body[x])
+                    ])
+                    res.sendStatus(201)
+                } catch (e) {
+                    res.send(e)
+                }
             }
+        } else {
+            res.send(400)
         }
     }
 })
