@@ -60,7 +60,6 @@ app.get('/events', async (req, res) => {
         const password = await client.query('SELECT password FROM users WHERE username = $1', [req.query.username])
         if (req.query.password === password.rows[0].password) {
             const events = await client.query('SELECT * FROM events WHERE user_username = $1', [req.query.username])
-            console.log(events.rows)
             res.set('Access-Control-Allow-Origin', '*')
             res.send(events.rows)
         } else {
