@@ -84,13 +84,17 @@ Body
 ## Events
 ### URL
 ```
-GET /events
+POST /getEvents
 ```
 
 ### Request
-Query parameters
-- `username` - username
-- `password` - password
+Body
+```
+{
+    "username": username,
+    "password": password,
+}
+```
 
 ### Response
 ```
